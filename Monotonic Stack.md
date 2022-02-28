@@ -51,21 +51,19 @@ for(int i:nums){
 
   Solution
   ```
-      public boolean find132pattern(int[] nums) {
+    public boolean find132pattern(int[] nums) {
         int[]min = new int[nums.length];
         min[0]=nums[0];
         for(int i=1;i<nums.length;i++){
             min[i]=Math.min(min[i-1],nums[i]);
         }
-        int[]s = new int[nums.length];
-        int idx = -1;
+        Stack<int[]>s = new Stack<>(); // (element, index)
         for(int i=0;i<nums.length;i++){
-            while(idx>=0 && nums[i]>=nums[s[idx]])
-                idx--;
-            if(idx>=0 && min[s[idx]]<nums[i])
+            while(!s.empty() && nums[i]>=s.peek()[0])
+                s.pop();
+            if(!s.empty() && min[s.peek()[1]]<nums[i])
                 return true;
-            idx++;
-            s[idx]=i;
+            s.push(new int[]{nums[i],i});
         }
         return false;
     }
