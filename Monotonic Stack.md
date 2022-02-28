@@ -32,3 +32,41 @@ Continuing this process our final state of `S` will be:
 ```
 S = [1, 5]
 ```
+
+#### Java code for updating the strictly increasing stack:
+
+```
+int[] nums = new int[]{2, 3, 4, 1, 5};
+Stack<Integer> s = new Stack<>();
+for(int i:nums){
+  while(!s.empty() && i<=s.peek()){
+    s.pop();
+  }
+  s.push(i);
+}
+```
+
+#### Example:
+1. [The 132 Pattern](https://leetcode.com/problems/132-pattern):
+
+  Solution
+  ```
+      public boolean find132pattern(int[] nums) {
+        int[]min = new int[nums.length];
+        min[0]=nums[0];
+        for(int i=1;i<nums.length;i++){
+            min[i]=Math.min(min[i-1],nums[i]);
+        }
+        int[]s = new int[nums.length];
+        int idx = -1;
+        for(int i=0;i<nums.length;i++){
+            while(idx>=0 && nums[i]>=nums[s[idx]])
+                idx--;
+            if(idx>=0 && min[s[idx]]<nums[i])
+                return true;
+            idx++;
+            s[idx]=i;
+        }
+        return false;
+    }
+  ```
