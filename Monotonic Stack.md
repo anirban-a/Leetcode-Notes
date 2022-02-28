@@ -48,8 +48,9 @@ for(int i:nums){
 
 #### Example:
 1. [The 132 Pattern](https://leetcode.com/problems/132-pattern):
-
-  Solution
+  This problem requires us to maintain a strictly decreasing stack.
+  
+  **Solution**
   ```
     public boolean find132pattern(int[] nums) {
         int[]min = new int[nums.length];
@@ -57,13 +58,13 @@ for(int i:nums){
         for(int i=1;i<nums.length;i++){
             min[i]=Math.min(min[i-1],nums[i]);
         }
-        Stack<int[]>s = new Stack<>(); // (element, index)
+        Stack<Integer>s = new Stack<>(); // (element, index)
         for(int i=0;i<nums.length;i++){
-            while(!s.empty() && nums[i]>=s.peek()[0])
+            while(!s.empty() && nums[i]>=nums[s.peek()])
                 s.pop();
-            if(!s.empty() && min[s.peek()[1]]<nums[i])
+            if(!s.empty() && min[s.peek()]<nums[i])
                 return true;
-            s.push(new int[]{nums[i],i});
+            s.push(i);
         }
         return false;
     }
